@@ -27,16 +27,9 @@ graph TD
 
 ---
 
-## 📊 Empirical Performance Summary
+## 📊 Demonstrator scope
 
-Empirical evaluations demonstrate that **COGN-NDAN** consistently outperforms standard benchmarks (gRPC, MQTT, CoAP):
-
-| Metric | MQTT | gRPC | CoAP | **COGN-NDAN** | **Improvement** |
-| :--- | :---: | :---: | :---: | :---: | :---: |
-| **End-to-End Latency** | 48 ms | 41 ms | 62 ms | **12–23 ms** | **45% to 71% reduction** |
-| **Bandwidth (Scenario B)** | 300 GB | 45 GB | 300 GB | **24 GB** | **87% to 92% savings** |
-| **Total Energy (mJ)** | 2740 | 2715 | 2705 | **2275** | **40% efficiency gain** |
-| **Low-SNR Robustness** | Fails | Fails | Fails | **Fidelity >0.81** | **Graceful degradation** |
+The browser interface is a conceptual demonstrator. Its displayed metrics and procedural waveforms are illustrative defaults, not empirical measurements. The repository does not contain NS-3 modules, trained model weights, raw EEG, participant data, measured network traces, or an experimental dataset.
 
 ---
 

@@ -1132,7 +1132,9 @@ breaklinks=true}
 {\parindent\z@%
 \vspace*{-17.1pt}
 {\begin{tabular*}{\textwidth}{@{\extracolsep{\fill}}p{300pt}r@{}}
-\vbox to 73pt{{\arttypefont\@arttype\par}\vfill\titlefont\@title\par}
+% The CINC title block must accommodate long, multiline titles without
+% allowing the author block to overlap the final title line.
+\vbox to 115pt{{\arttypefont\@arttype\par}\vfill\titlefont\@title\par}
 &
 \begin{minipage}[t]{185pt}\fontsize{8}{10}\selectfont
 \vspace*{-63pt}

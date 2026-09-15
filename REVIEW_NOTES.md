@@ -2,16 +2,16 @@
 
 ## Status
 
-The clean manuscript has been restructured with the supplied `BVP_CINC.cls` template and deliberately limits claims to what is supported by the repository. These items require author or editorial confirmation before submission.
+Submission package prepared without upload or repository commit. The manuscript uses the supplied CINC class, contains three reproducible conceptual figures, and limits claims to the architecture and browser demonstrator supported by repository evidence.
 
-## Author confirmation required
+## Final author metadata
 
-- **Affiliation:** The source draft identifies Fernando May Fuentes with the School of Electronics and Information Engineering and IPN UPIITA. Confirm the exact official English institution and department wording.
-- **Funding:** The repository does not document funding. Confirm whether “No funding information is documented” is complete, or provide the verified funder and grant number.
-- **Conflicts:** Confirm the no-conflict statement.
-- **Ethics:** The revised manuscript reports no human-participant or animal experiment in the repository. Confirm whether any external human data, participant study, EEG acquisition, or ethics approval was used for the work.
-- **Corresponding author:** Confirm `fmayf1500@alumno.ipn.mx` remains the correct institutional email.
-- **ORCID:** Confirm ownership and preferred display of `0009-0002-3953-5224`.
+- Affiliation: Instituto Politécnico Nacional, UPIITA, Mexico; Beihang University (BUAA), China.
+- Corresponding email: `fmayf1500@alumno.ipn.mx`.
+- ORCID: `0009-0002-3953-5224`.
+- Funding: `This research received no external funding.`
+- Conflicts: The author declares no conflicts of interest.
+- Ethics/data boundary: No human-participant or animal experiment is included; animal-experiment reporting is not applicable.
 
 ## Evidence and reproducibility limits
 
@@ -22,6 +22,16 @@ The clean manuscript has been restructured with the supplied `BVP_CINC.cls` temp
 
 ## Reference review
 
-- References were retained only when bibliographic data were present in the original manuscript and formatted in APA-like author/year form required by the supplied template.
-- The original `klimesch2012alpha` citation key was corrected to `holm2009` because the listed bibliographic record is Holm et al. (2009), not Klimesch (2012).
-- Uncited bibliography entries and citations to unsupported or unverifiable records were removed from the clean manuscript. The author should check every DOI and author spelling against the publisher record before final submission.
+- Crossref DOI checks completed for all 13 bibliography entries; DOI, title, authors, venue, year, volume, and pages/article number were checked against the returned metadata.
+- Four 2021–2022 recent works are present and directly relevant: Xie et al. (2021), Alexandropoulos et al. (2021), Yuan et al. (2021), and Iyer et al. (2022).
+- Citation/reference audit: 13 bibliography entries and 13 cited keys; no uncited bibliography entries and no undefined citation keys.
+
+## Figure inventory
+
+| Figure | Source | Generated output | Scientific status |
+|---|---|---|---|
+| 1 | `figures/fig1_architecture.tex` | `figures/fig1_architecture.pdf` | Conceptual architecture |
+| 2 | `figures/fig2_packet_workflow.tex` | `figures/fig2_packet_workflow.pdf` | Conceptual protocol workflow |
+| 3 | `figures/fig3_boundary.tex` | `figures/fig3_boundary.pdf` | Conceptual reproducibility boundary |
+
+All three outputs are vector PDFs generated with pdfTeX/TikZ; no empirical chart is included.
