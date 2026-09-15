@@ -1,0 +1,151 @@
+\documentclass{BVP_CINC}
+
+\usepackage{booktabs}
+
+\newcommand{\COGN}{COGN-NDAN}
+\newcommand{\RI}{reconfigurable intelligent surface}
+\ifdefined\TRACKEDVERSION
+  \newcommand{\added}[1]{\textcolor{blue}{#1}}
+\else
+  \newcommand{\added}[1]{#1}
+\fi
+
+\received{19 September 2026}
+\revised{}
+\accepted{}
+\published{}
+\doi{}
+\OAText{{\copyright} The Author(s) 2026. Published by BON VIEW PUBLISHING PTE. LTD. This is an open access article under the CC BY License (https://creativecommons.org/licenses/by/4.0/).}
+
+\begin{document}
+
+\arttype{Research Article}
+\title{COGN-NDAN: A Semantic-Aware Cross-Layer Protocol with Neural Feedback Integration for Neuro-Symbiotic 6G Networks}
+
+\author{Fernando May Fuentes\thanks{\textbf{Corresponding author:} Instituto Politécnico Nacional, UPIITA, Mexico; Beihang University (BUAA), China. Email: \email{fmayf1500@alumno.ipn.mx}. ORCID: \href{https://orcid.org/0009-0002-3953-5224}{0009-0002-3953-5224}.}}
+\affil{Instituto Politécnico Nacional, UPIITA, Mexico; Beihang University (BUAA), China.}
+
+\begin{abstract}
+Semantic communication can reduce the cost of transporting information when an application needs task-relevant meaning rather than exact reconstruction. This paper presents COGN-NDAN, a conceptual cross-layer protocol architecture for 6G systems that combines semantic feature transport, intent-based routing, adaptive edge inference, and feedback from a cognitive-load index. The architecture connects application urgency to network scheduling and to physical-layer adaptation, including reconfigurable intelligent surfaces. It also specifies a semantic packet header and an integrity mechanism based on keyed hashes. The accompanying repository contains a browser-based demonstrator with procedural EEG-like waveforms, configurable traffic scenarios, and illustrative telemetry; it does not contain an NS-3 implementation, experimental datasets, or measured network traces. Accordingly, the numerical values shown in the demonstrator are simulation defaults and are not presented here as independently validated experimental results. The paper formalizes the design, identifies its assumptions, and defines a reproducibility boundary for future implementation and evaluation.
+\end{abstract}
+
+\begin{keywords}
+semantic communication, 6G networks, edge intelligence, cognitive feedback, reconfigurable intelligent surfaces
+\end{keywords}
+
+\maketitle
+
+\section{Introduction}
+Future wireless systems are expected to support heterogeneous applications whose success depends on task completion, intent, or timeliness rather than on bit-perfect delivery alone. Semantic communication addresses this distinction by preserving information relevant to a downstream task instead of treating every bit as equally valuable \cite{strinati2021,xie2022semantic}. Edge computing and split inference provide a natural execution model for such systems because feature extraction can occur close to the data source while more demanding inference runs at an edge service \cite{bonomi2012fog,wang2020}.
+
+This paper describes COGN-NDAN (Cognitive Orchestration and Green Networking--NeuroDigital Adaptive Network), a protocol architecture that links semantic intent, adaptive routing, physical-layer control, and a user-state feedback signal. The repository associated with this manuscript is a browser demonstrator rather than a complete network simulator. The contribution is therefore architectural and formal: it defines the protocol components and their interfaces without claiming that the repository independently reproduces clinical, hardware, or network experiments.
+
+The contributions are threefold: (1) a cross-layer architecture and semantic header model; (2) a cognitive-load feedback policy for scheduling and feature compression; and (3) an explicit reproducibility boundary that distinguishes the conceptual design from the repository's generated demonstration behavior.
+
+\section{Related Work}
+Semantic and goal-oriented communication extend conventional communication objectives beyond reliable bit delivery \cite{strinati2021}. Learned joint source--channel approaches demonstrate how an encoder and decoder can be optimized for a task or representation rather than for exact source reconstruction \cite{xie2022semantic}. Edge computing surveys describe the latency and resource trade-offs involved in placing inference between devices, access networks, and cloud services \cite{bonomi2012fog,wang2020}; reinforcement-learning work has also studied adaptive offloading and mobile edge decisions \cite{mao2017learning}.
+
+\RI{}s have been studied as programmable propagation environments whose phase configuration can improve wireless links \cite{wu2020towards,elmossallamy2020ris}. Cognitive-load estimation from EEG has used event-related potentials and spectral features, including P300-related measures and workload indicators \cite{sutton1965evoked,polich2007,holm2009}. These sources motivate the building blocks used here, but they do not validate the particular COGN-NDAN integration.
+
+\section{Architecture}
+COGN-NDAN is organized into three cooperating layers. The edge-device layer extracts task-relevant features and estimates a normalized cognitive-load index. The semantic network layer classifies intent and selects a path using latency, energy, and semantic cost. The physical layer adapts transmission and \RI{} control subject to the available radio implementation.
+
+\subsection{Semantic header and routing}
+Each packet is modeled as
+\begin{equation}
+ H=\{I,C,U,Q,D\},
+\end{equation}
+where $I$ is an intent identifier, $C$ is a criticality level, $U$ is an urgency score, $Q$ is an integrity value, and $D$ is the feature dimension. The routing engine selects
+\begin{equation}
+ p^*=\arg\min_{p\in\mathcal{P}}\left(\alpha L(p)+\beta E(p)+\gamma S(p\mid I)\right),
+\end{equation}
+where $L$, $E$, and $S$ denote latency, energy, and semantic cost. The weights may be changed by policy, but their values must be reported by any future experiment.
+
+The demonstrator uses four illustrative classes: Critical Cognitive, Interactive Real-Time, Adaptive Semantic, and Background. These labels are interface behavior, not evidence of a trained classifier. A deployable implementation would require a labeled dataset, a defined train/test protocol, and independent measurements.
+
+\subsection{Cognitive feedback}
+The architecture represents cognitive load with a bounded index
+\begin{equation}
+ \mathrm{CLI}(t)=\sigma\left(\alpha P(t)+\beta R(t)+\gamma E(t)\right),
+\end{equation}
+where $P$, $R$, and $E$ are normalized P300-related, theta--beta, and spectral-entropy features, and $\sigma$ bounds the result. A policy maps the index to High-Fidelity, Balanced, or Latency-Optimized operation. The policy can alter feature compression, queue priority, and radio-control requests. No claim is made here that the index is clinically valid or that EEG from human participants was collected.
+
+\subsection{Physical-layer and integrity interfaces}
+The physical-layer interface exposes requests for beam selection and \RI{} phase configuration. The protocol does not prescribe a particular antenna, propagation model, or hardware controller. For integrity, a packet may carry
+\begin{equation}
+ Q=\mathrm{HMAC\mathchar`-SHA256}(I\mathbin\Vert K\mathbin\Vert T),
+\end{equation}
+where $K$ is a key and $T$ is a freshness value. Verification failure causes quarantine in the conceptual state machine. This mechanism protects metadata integrity; it does not by itself establish semantic correctness or defend against compromised endpoints.
+
+\section{Repository Demonstrator and Reproducibility Boundary}
+The public repository at \url{https://github.com/FernandoMay/cogn-ndan} contains this manuscript draft and a client-side HTML/CSS/JavaScript demonstrator. The JavaScript generates procedural waveforms, changes interface state from slider inputs, animates packets, and displays illustrative comparative metrics. It includes mock adversarial-injection behavior. The repository does not contain the NS-3 modules, trained neural models, raw EEG, human-subject data, hardware traces, or figure assets described in unsupported portions of the earlier draft.
+
+Table~\ref{tab:defaults} records examples of values initialized in the demonstrator. They are included to make the reproducibility boundary explicit; they are not experimental observations.
+
+\begin{table}
+\centering
+\caption{Examples of demonstrator defaults; these values are illustrative and not experimental measurements.}
+\label{tab:defaults}
+\begin{tabular}{@{}ll@{}}
+\toprule
+Interface state & Default value \\
+\midrule
+Initial cognitive load & 0.18 \\
+Initial channel SNR & 20 dB \\
+Initial congestion & 20\% \\
+Displayed COGN-NDAN energy scale & 2.27 \\
+Displayed semantic bandwidth scale & 24 GB \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+The repository can reproduce the interactive display by opening \texttt{index.html} in a browser. It cannot reproduce a packet-level experiment or any numerical performance claim that requires NS-3, measured traces, a trained model, or a disclosed dataset. \added{Future evaluation should publish the simulator version, source modules, configuration files, seeds, datasets, trained weights, and raw output.}
+
+\section{Discussion}
+The architecture provides a vocabulary for connecting semantic urgency with network and radio policies. Its principal engineering risk is cross-layer coupling: an inaccurate cognitive estimate or semantic classifier could incorrectly elevate traffic, reduce fidelity, or consume additional energy. A safe implementation therefore needs calibration, admission controls, audit logs, and fail-safe behavior when feedback is missing or uncertain. Security evaluation should include key management, replay resistance, endpoint compromise, and attacks against the encoder and classifier rather than relying only on packet-level integrity.
+
+The current repository supports a demonstrator and a design discussion, not a claim of field deployment, clinical validation, or statistically supported performance improvement. Those claims remain open research questions.
+
+\section{Conclusion}
+COGN-NDAN defines a semantic-aware cross-layer protocol architecture that combines intent-based routing, adaptive edge inference, cognitive feedback, and physical-layer control. The accompanying repository provides a generated browser demonstration, while the implementation and data needed for independent network evaluation remain unavailable there. Separating the architecture from unsupported empirical claims makes the manuscript suitable as a design proposal and establishes the evidence required for a future validation study.
+
+\section*{Funding}
+No funding information is documented in the repository. The author should confirm whether this statement is complete before publication.
+
+\section*{Ethical Statement}
+The repository contains no human-participant experiment or animal experiment. EEG-like signals in the demonstrator are procedurally generated for visualization; therefore, animal-experiment reporting is not applicable. If human data or experiments were used outside this repository, the author must replace this statement with the applicable ethics approval and consent information.
+
+\section*{Conflicts of Interest}
+The author declares no conflicts of interest.
+
+\section*{Data Availability Statement}
+The source code for the browser-based demonstrator and the manuscript source are publicly available at \url{https://github.com/FernandoMay/cogn-ndan}. The repository contains generated, procedural EEG-like signals and mock simulation behavior, but no raw EEG, human-participant data, NS-3 modules, trained model weights, measured network traces, or experimental dataset. Consequently, the numerical values displayed by the demonstrator are not independently reproducible experimental results from the repository. \added{No animal data or animal experiments are included.}
+
+\section*{Author Contribution Statement}
+Fernando May Fuentes: Conceptualization, methodology, software, formal analysis, investigation, writing--original draft, writing--review and editing, and visualization.
+
+\begin{thebibliography}{99}
+
+\bibitem{strinati2021} Strinati, E. C., \& Barbarossa, S. (2021). 6G networks: Beyond Shannon towards semantic and goal-oriented communications. \textit{Computer Networks, 190}, 107930. \url{https://doi.org/10.1016/j.comnet.2021.107930}
+
+\bibitem{xie2022semantic} Xie, H., Qin, Z., Li, G. Y., \& Juang, B.-H. (2021). Deep learning enabled semantic communication systems. \textit{IEEE Transactions on Signal Processing, 69}, 2663--2675. \url{https://doi.org/10.1109/TSP.2021.3071210}
+
+\bibitem{bonomi2012fog} Bonomi, F., Milito, R., Zhu, J., \& Addepalli, S. (2012). Fog computing and its role in the Internet of Things. In \textit{Proceedings of the first edition of the MCC workshop on Mobile cloud computing} (pp. 13--16). Association for Computing Machinery. \url{https://doi.org/10.1145/2342509.2342513}
+
+\bibitem{wang2020} Wang, X., Han, Y., Leung, V. C. M., Niyato, D., Yan, X., \& Chen, X. (2020). Convergence of edge computing and deep learning: A comprehensive survey. \textit{IEEE Communications Surveys \& Tutorials, 22}(2), 869--904. \url{https://doi.org/10.1109/COMST.2020.2970550}
+
+\bibitem{mao2017learning} Mao, Y., You, C., Zhang, J., Huang, K., \& Letaief, K. B. (2017). A survey on mobile edge computing: The communication perspective. \textit{IEEE Communications Surveys \& Tutorials, 19}(4), 2322--2358. \url{https://doi.org/10.1109/COMST.2017.2745201}
+
+\bibitem{wu2020towards} Wu, Q., \& Zhang, R. (2020). Towards smart and reconfigurable environment: Intelligent reflecting surface aided wireless network. \textit{IEEE Communications Magazine, 58}(1), 106--112. \url{https://doi.org/10.1109/MCOM.001.1900107}
+
+\bibitem{elmossallamy2020ris} ElMossallamy, M. A., Zhang, H., Song, L., Seddik, K., Han, Z., \& Alouini, M.-S. (2020). Reconfigurable intelligent surfaces for wireless communications: Principles, challenges, and opportunities. \textit{IEEE Transactions on Cognitive Communications and Networking, 6}(3), 990--1002. \url{https://doi.org/10.1109/TCCN.2020.2992604}
+
+\bibitem{sutton1965evoked} Sutton, S., Braren, M., Zubin, J., \& John, E. R. (1965). Evoked-potential correlates of stimulus uncertainty. \textit{Science, 150}(3700), 1187--1188. \url{https://doi.org/10.1126/science.150.3700.1187}
+
+\bibitem{polich2007} Polich, J. (2007). Updating P300: An integrative theory of P3a and P3b. \textit{Clinical Neurophysiology, 118}(10), 2128--2148. \url{https://doi.org/10.1016/j.clinph.2007.04.019}
+
+\bibitem{holm2009} Holm, A., Lukander, K., Korpela, J., Sallinen, M., \& Müller, K. M. I. (2009). Estimating brain load from the EEG. \textit{The Scientific World Journal, 9}, 639--651. \url{https://doi.org/10.1100/tsw.2009.83}
+
+\end{thebibliography}
+
+\end{document}

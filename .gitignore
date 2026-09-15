@@ -1,0 +1,11 @@
+*.aux
+*.log
+*.out
+*.synctex.gz
+*.stdout.log
+missfont.log
+verification-build/
+cinc-latex-template-download
+cinc-template/BVP_Sample.*
+cinc-template/1.pdf
+cinc-template/2.pdf
