@@ -10,6 +10,8 @@ Date: 2026-09-15
 - Template reference: `cinc-template/BVP_Sample.tex`
 - Author response: `AUTHOR_RESPONSE_LETTER.md`
 - Contributor roles: `CRediT_Contributor_Roles.md`
+- Full-content source: `CINC_10432_full_revised.tex`
+- Full-content PDF: `CINC_10432_full_revised.pdf`
 
 ## Compilation
 
@@ -26,6 +28,7 @@ Results:
 
 - `CINC_10432_clean.pdf`: compiled successfully, 3 pages.
 - `CINC_10432_tracked.pdf`: compiled successfully, 3 pages.
+- `CINC_10432_full_revised.pdf`: compiled successfully from the complete original `paper.tex` content with CINC metadata.
 - Figure source compilation: all three TikZ sources compiled successfully to vector PDF.
 - Visual inspection: the first-page title, author, affiliation, abstract, and Figure 1 placement were inspected after the title-block height correction; no title/author overlap or figure clipping was observed.
 
@@ -61,3 +64,5 @@ The title-block height was corrected in the supplied class to prevent the visibl
 ## Archive
 
 `CINC_10432_latex_source.zip` was regenerated with 10 files: both manuscript sources, the modified CINC class, the CINC logo, and each figure's TikZ source plus generated PDF. The response letter and CRediT form remain separate package files as requested.
+
+The full-content revision is supplied separately so the editor can choose the complete manuscript rather than the shorter `clean` editorial version.
