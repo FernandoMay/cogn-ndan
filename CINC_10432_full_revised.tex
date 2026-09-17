@@ -64,7 +64,7 @@ The remainder of this paper is organized as follows: Section II presents a compr
 \subsection{Semantic Communications and Information-Theoretic Foundations}
 The concept of semantic communication represents a departure from Shannon's foundational information theory. While Shannon's framework optimizes for reliable bit transmission regardless of meaning, semantic communication theory focuses on preserving the functionality or intent of the message. Seminal work by Strinati et al. \cite{strinati2021} proposed a comprehensive semantic architecture for 6G networks, emphasizing explicit separation between the semantic layer and the pragmatic layer of communication. Their framework demonstrates theoretical potential for beyond-Shannon transmission efficiency.
 
-Clegg et al. \cite{clegg2023semantic} developed practical implementations of semantic encoders for specific application domains, particularly in video transmission where frame-level semantic importance varies significantly. Similarly, Xie et al. \cite{xie2022semantic} proposed task-oriented communication frameworks where the encoder optimizes not for raw data reconstruction but for successful downstream task completion. However, a critical gap exists in prior work: none integrate real-time biological feedback into the semantic encoding pipeline. \COGN{} addresses this by making the encoder adaptive to user cognitive state via EEG telemetry.
+Clegg et al. \cite{clegg2023semantic} developed practical implementations of semantic encoders for specific application domains, particularly in video transmission where frame-level semantic importance varies significantly. Lan et al. \cite{lan2021semantic} surveyed semantic-system architectures and optimization questions, while Lu et al. \cite{lu2024semantic} catalogued semantics-empowered communication techniques and open challenges. Similarly, Xie et al. \cite{xie2022semantic} proposed task-oriented communication frameworks where the encoder optimizes not for raw data reconstruction but for successful downstream task completion. However, a critical gap exists in prior work: none integrate real-time biological feedback into the semantic encoding pipeline. \COGN{} addresses this by making the encoder adaptive to user cognitive state via EEG telemetry.
 
 \subsection{Edge Intelligence, Split Computing, and Task-Aware Network Design}
 The concept of split learning and inference offloading, pioneered by Bonomi et al. \cite{bonomi2012fog}, has become central to 6G architecture. Wang et al. \cite{wang2020} surveyed the convergence of edge computing with deep learning, identifying that optimal split points depend on network latency, device computational capacity, and task deadline constraints. Their analysis, however, assumes static network conditions.
@@ -74,17 +74,20 @@ Recent work by Mao et al. \cite{mao2017learning} applies reinforcement learning 
 \subsection{Reconfigurable Intelligent Surfaces (RIS) and Physical Layer Adaptation}
 RIS technology, also termed Intelligent Reflecting Surfaces (IRS) or Metasurfaces, has emerged as a transformative physical layer technology for 6G. Seminal theoretical work by Wu and Zhang \cite{wu2020towards} established the optimization landscape for RIS-assisted MIMO systems. Subsequent work by Alouini et al. \cite{alouini2021programmable} demonstrated that RIS can effectively combat multipath fading and improve coverage in NLOS scenarios.
 
-Nearly all existing RIS optimization literature assumes quasi-static optimization horizons (on the order of seconds to minutes). \COGN{} contributes by proposing millisecond-scale RIS adaptation triggered by semantic urgency signals, creating a feedback loop between application semantics and physical layer adaptation. This represents the first work explicitly synchronizing RIS phase shifts with semantic traffic classification.
+Nearly all existing RIS optimization literature assumes quasi-static optimization horizons (on the order of seconds to minutes). \COGN{} contributes a protocol-level proposal for RIS adaptation triggered by semantic urgency signals, creating a feedback loop between application semantics and physical layer adaptation. We do not claim new RIS hardware or measured millisecond reconfiguration; the present manuscript specifies the interface and identifies the measurements required for validation.
 
 \subsection{Neuromarkers and Cognitive Load Assessment in HCI}
 Formal assessment of cognitive load via EEG dates to work on Event-Related Potentials (ERPs) such as P300, established by Sutton et al. \cite{sutton1965evoked}. Modern cognitive neuroscience has identified robust biomarkers: P300 amplitude correlates with attentional resource allocation \cite{polich2007}, while theta-beta oscillation ratios (TBR) serve as indicators of workload and mental fatigue \cite{klimesch2012alpha}.
 
-Recent BCI systems employ these markers for adaptive interfaces (Roy et al. \cite{roy2019multimodal}), but these applications remain localized to single devices. \COGN{} represents the first integration of validated neuromarkers into wide-area network operation, extending cognitive load adaptation from device-level to network-level resource management.
+Recent BCI systems employ these markers for adaptive interfaces (Roy et al. \cite{roy2019multimodal}), but these applications remain localized to single devices. \COGN{} extends the design discussion toward network-level resource management. The contribution is protocol integration and explicit calibration requirements, not new biomarker discovery or clinical validation.
 
 \subsection{Security in Semantic Communication Systems}
 As semantic communication systems mature, security challenges emerge. Adversarial examples in deep neural networks (Goodfellow et al. \cite{goodfellow2014explaining}) reveal that small perturbations in input space can cause catastrophic misclassification. In semantic channels, such attacks could modify the reconstructed intent without detection via traditional integrity checks.
 
 Recent work (Durumeric et al. \cite{durumeric2014semantically}) proposed detection mechanisms for semantic manipulation, though these assume offline verification. SentinelX, introduced herein, contributes the first real-time, cryptographically-verified semantic integrity mechanism designed for network-scale deployment.
+
+\subsection{Practical Deployment Context}
+Measurement-driven campus-RF studies show that building blockage, traffic locality, and deployment geometry dominate practical coverage and reliability constraints. Lightweight edge inference studies likewise show that embedded devices can execute compact classifiers under energy limits. These observations motivate the deployment assumptions in this manuscript, but they are calibration references rather than COGN-NDAN experiments.
 
 \subsection{Positioning of \COGN{} Within the Nexus Initiative}
 The (Heterogeneous Intelligent Knowledge and Sensing Enabled Mixed Infrastructure) Nexus represents an ambitious initiative to unify diverse research clusters addressing AI, sensing, vehicular networks, and cognitive systems. \COGN{} specifically serves the intersection of these domains by providing infrastructure-level support for cognitive-adaptive network operation. Our work directly addresses Nexus requirements for: (a) seamless interoperability across heterogeneous devices, (b) real-time adaptation to changing conditions, and (c) transparent integration of neural feedback signals.
@@ -135,7 +138,10 @@ The Semantic Network Layer replaces traditional IP routing with an intent-aware 
 Each packet in \COGN{} carries an extended header:
 
 \begin{equation}
-    \text{Semantic Header} = \{\text{IntentID}, \text{CriticalityLevel}, \text{CognitiveUrgency}, \text{SemanticHash}, \text{FeatureDim}\}
+\begin{aligned}
+\text{Semantic Header} = \{&\text{IntentID},\ \text{CriticalityLevel},\\
+&\text{CognitiveUrgency},\ \text{SemanticHash},\ \text{FeatureDim}\}.
+\end{aligned}
 \end{equation}
 
 where:
@@ -163,7 +169,10 @@ The neural traffic classifier operates as a lightweight, online-learning convolu
 For each incoming packet with semantic intent $\text{Intent}_i$, the routing engine computes the optimal path considering multiple metrics:
 
 \begin{equation}
-    \text{Path}^* = \arg\min_{p \in \mathcal{P}} \left[ \alpha \cdot \text{Latency}(p) + \beta \cdot \text{Energy}(p) + \gamma \cdot \text{SemanticCost}(p | \text{Intent}_i) \right]
+\begin{aligned}
+\text{Path}^* = \arg\min_{p \in \mathcal{P}}\big[&\alpha\,\text{Latency}(p)+\beta\,\text{Energy}(p)\\
+&+\gamma\,\text{SemanticCost}(p\mid\text{Intent}_i)\big].
+\end{aligned}
 \end{equation}
 
 where $\mathcal{P}$ is the set of feasible network paths, and weights $\alpha, \beta, \gamma$ are dynamically adjusted based on current cognitive load $\text{CLI}(t)$. The SemanticCost term encodes the degree to which the path's channel characteristics support the encoded feature quality required for semantic reconstruction.
@@ -590,6 +599,12 @@ Z.~Durumeric, J.~Kasten, M.~Bailey, and J.~A. Halderman, ``Semantically-secured 
 
 \bibitem{lutz2023channel}
 T.~Lutz, R.~Müller, and P.~Schellmann, ``Channel measurement and modeling for 6G mobile communications in the sub-THz and mmWave bands,'' \emph{IEEE Communications Magazine}, vol.~61, no.~2, pp.~88--94, Feb. 2023. DOI: \href{https://doi.org/10.1109/MCOM.001.2200456}{10.1109/MCOM.001.2200456}
+
+\bibitem{lan2021semantic}
+Q. Lan, D. Wen, Z. Zhang, Q. Zeng, X. Chen, P. Popovski, and K. Huang, ``What is semantic communication? A view on conveying meaning in the era of machine intelligence,'' \emph{Journal of Communications and Information Networks}, vol. 6, no. 4, pp. 336--371, 2021.
+
+\bibitem{lu2024semantic}
+Z. Lu, R. Li, K. Lu, X. Chen, E. Hossain, Z. Zhao, et al., ``Semantics-empowered communications: A tutorial-cum-survey,'' \emph{IEEE Communications Surveys \& Tutorials}, vol. 26, no. 1, pp. 41--79, 2024.
 
 \end{thebibliography}
 
