@@ -1,5 +1,6 @@
 \documentclass{BVP_CINC}
 \usepackage{amsmath,amssymb,amsfonts}
+\usepackage{booktabs}
 \usepackage{algorithmic}
 \usepackage{graphicx}
 \usepackage{textcomp}
@@ -9,6 +10,8 @@
 \usepackage{hyperref}
 \newcommand{\COGN}{COGN-NDAN}
 \newcommand{\RI}{Reconfigurable Intelligent Surface}
+\setlength{\tabcolsep}{4pt}
+\renewcommand{\arraystretch}{1.15}
 \received{}
 \revised{}
 \accepted{}
@@ -19,7 +22,7 @@
 \arttype{Research Article}
 \title{COGN-NDAN: A Semantic-Aware Cross-Layer Protocol with Neural Feedback Integration for Neuro-Symbiotic 6G Networks}
 \author{Fernando May Fuentes\thanks{\textbf{Corresponding author:} Fernando May Fuentes, Instituto Politécnico Nacional, UPIITA, Mexico; Beihang University, China. Email: \email{fmayf1500@alumno.ipn.mx}; ORCID: \href{https://orcid.org/0009-0002-3953-5224}{0009-0002-3953-5224}.}}
-\affil{Instituto Politécnico Nacional, UPIITA, Mexico; Beihang University, School of Electronics and Information Engineering, China.}
+\affil{Instituto Politécnico Nacional, UPIITA, Mexico; Beihang University, School of Electronics and Information Engineering, China.\\ORCID: \href{https://orcid.org/0009-0002-3953-5224}{0009-0002-3953-5224}.}
 \begin{abstract}
 Semantic communication can reduce the cost of transporting information when an application needs task-relevant meaning rather than exact reconstruction. This paper presents COGN-NDAN, a cross-layer protocol architecture for 6G systems that combines semantic feature transport, intent-based routing, adaptive edge inference, and feedback from a cognitive-load index. The architecture connects application urgency to network scheduling and physical-layer adaptation, including reconfigurable intelligent surfaces. It also specifies a semantic packet header and an integrity mechanism based on keyed hashes. The accompanying repository contains a browser-based demonstrator with procedural EEG-like waveforms, configurable traffic scenarios, and illustrative telemetry; it does not contain an NS-3 implementation, experimental datasets, or measured network traces. Accordingly, the numerical values shown in the demonstrator are simulation defaults and are not presented here as independently validated experimental results. The full manuscript formalizes the design, identifies assumptions, and defines a reproducibility boundary for future implementation and evaluation.
 \end{abstract}
@@ -43,7 +46,7 @@ Current network protocols suffer from three critical deficiencies when applied t
 These deficiencies become acute in the context of the Nexus initiative, which targets seamless integration of diverse application domains requiring synchronized cognitive, wireless, and computational resources.
 
 \subsection{The COGN-NDAN Proposal and Research Contributions}
-To address these multifaceted challenges, we propose the \textbf{COGN-NDAN} protocol framework. Drawing upon the Latin root \textit{cognitio} (knowledge and perception), \COGN{} represents a fundamental transition to ``Cognitive Networking''—an architectural paradigm wherein the network operates as an intelligent, adaptive extension of the user's cognitive processes. Specifically, \COGN{} implements bidirectional information flow: the network transmits semantic content to the user while simultaneously receiving cognitive state feedback to optimize resource allocation.
+To address these multifaceted challenges, we propose the \textbf{COGN-NDAN} protocol framework. Drawing upon the Latin root \textit{cognitio} (knowledge and perception), \COGN{} represents a fundamental transition to ``Cognitive Networking''--an architectural paradigm wherein the network operates as an intelligent, adaptive extension of the user's cognitive processes. Specifically, \COGN{} implements bidirectional information flow: the network transmits semantic content to the user while simultaneously receiving cognitive state feedback to optimize resource allocation.
 
 Our principal contributions are delineated as follows:
 \begin{itemize}
@@ -86,6 +89,12 @@ Recent work (Durumeric et al. \cite{durumeric2014semantically}) proposed detecti
 \subsection{Positioning of \COGN{} Within the Nexus Initiative}
 The (Heterogeneous Intelligent Knowledge and Sensing Enabled Mixed Infrastructure) Nexus represents an ambitious initiative to unify diverse research clusters addressing AI, sensing, vehicular networks, and cognitive systems. \COGN{} specifically serves the intersection of these domains by providing infrastructure-level support for cognitive-adaptive network operation. Our work directly addresses Nexus requirements for: (a) seamless interoperability across heterogeneous devices, (b) real-time adaptation to changing conditions, and (c) transparent integration of neural feedback signals.
 
+\begin{figure}[t]
+\centering
+\includegraphics[width=\columnwidth]{figures/fig1_architecture.pdf}
+\caption{COGN-NDAN conceptual architecture. The three layers exchange intent, policy, and feedback information; the diagram is architectural and not an empirical result.}
+\label{fig:full-architecture}
+\end{figure}
 \section{System Architecture and Cross-Layer Integration}
 
 The \COGN{} architecture is fundamentally structured as a tri-pillar system integrating three distinct but tightly coupled functional domains: the Physical Layer (RF Transduction and Environmental Adaptation), the Semantic Network Layer (Intent Recognition and Adaptive Routing), and the Edge-Device Intelligence Layer (Distributed Inference and Cognitive Feedback).
@@ -159,6 +168,12 @@ For each incoming packet with semantic intent $\text{Intent}_i$, the routing eng
 
 where $\mathcal{P}$ is the set of feasible network paths, and weights $\alpha, \beta, \gamma$ are dynamically adjusted based on current cognitive load $\text{CLI}(t)$. The SemanticCost term encodes the degree to which the path's channel characteristics support the encoded feature quality required for semantic reconstruction.
 
+\begin{figure}[t]
+\centering
+\includegraphics[width=\columnwidth]{figures/fig2_packet_workflow.pdf}
+\caption{Semantic packet and routing workflow. Header fields carry intent and policy metadata to a routing decision; integrity verification and quarantine are protocol states, not measured security results.}
+\label{fig:full-packet}
+\end{figure}
 \subsection{Edge-Device Intelligence Layer: Distributed Inference and Closed-Loop Neural Feedback}
 
 The edge-device intelligence layer implements a distributed, adaptive inference pipeline that optimizes the device-edge split based on real-time network conditions and cognitive state.
