@@ -47,6 +47,8 @@ boundary = r'''\begin{figure}[t]
 body = body.replace("\\section{System Architecture and Cross-Layer Integration}", architecture + "\\section{System Architecture and Cross-Layer Integration}", 1)
 body = body.replace("\\subsection{Edge-Device Intelligence Layer: Distributed Inference and Closed-Loop Neural Feedback}", packet + "\\subsection{Edge-Device Intelligence Layer: Distributed Inference and Closed-Loop Neural Feedback}", 1)
 body = body.replace("\\section{Privacy, Data Ownership, and Ethical Considerations}", boundary + "\\section{Privacy, Data Ownership, and Ethical Considerations}", 1)
+body = body.replace("\\section{Standardization Roadmap and Deployment Considerations}", "\\clearpage\n\\section{Standardization Roadmap and Deployment Considerations}", 1)
+body = body.replace("\\section*{Acknowledgments}", "\\clearpage\n\\section*{Acknowledgments}", 1)
 body = body.replace(
     r'''\begin{equation}
     \text{Semantic Header} = \{\text{IntentID}, \text{CriticalityLevel}, \text{CognitiveUrgency}, \text{SemanticHash}, \text{FeatureDim}\}
