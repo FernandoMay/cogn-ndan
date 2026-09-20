@@ -80,24 +80,24 @@ The concept of semantic communication represents a departure from Shannon's foun
 Lan et al. \cite{lan2023semantic} surveyed the architecture and optimization of semantic communication systems, particularly in video transmission where frame-level semantic importance varies significantly. More recently, Lu et al. \cite{lu2024semantics} provided a comprehensive tutorial-cum-survey of semantics-empowered communications, cataloguing the enabling techniques and open challenges that motivate cross-layer, task-aware semantic designs such as \COGN{}. Similarly, Xie et al. \cite{xie2022semantic} proposed task-oriented communication frameworks where the encoder optimizes not for raw data reconstruction but for successful downstream task completion. However, a critical gap exists in prior work: none integrate real-time biological feedback into the semantic encoding pipeline. \COGN{} addresses this by making the encoder adaptive to user cognitive state via EEG telemetry.
 
 \subsection{Edge Intelligence, Split Computing, and Task-Aware Network Design}
-The concept of split learning and inference offloading, pioneered by Bonomi et al. \cite{bonomi2012fog}, has become central to 6G architecture. Zhou et al. \cite{zhou2019edge} surveyed the convergence of edge computing with deep learning, identifying that optimal split points depend on network latency, device computational capacity, and task deadline constraints. Their analysis, however, assumes static network conditions.
+The concept of split learning and inference offloading, pioneered by Bonomi et al. \cite{bonomi2012fog}, has become central to 6G architecture. Letaief et al. \cite{letaief2022edge} surveyed edge artificial intelligence for 6G, covering how network latency, device computational capacity, and task deadlines shape edge-device collaboration. Their analysis, however, assumes static network conditions.
 
-Recent work by Mao et al. \cite{mao2017learning} applies reinforcement learning to dynamic offloading decisions, learning optimal split points under variable network conditions. Nonetheless, these approaches treat application requirements as fixed; they do not adapt based on user physiological state. \COGN{} extends split computing by introducing cognitive state as a primary optimization parameter, fundamentally altering the dynamics of edge-device resource allocation.
+Recent work by Luo et al. \cite{luo2021resource} surveys resource scheduling in edge computing, covering dynamic offloading policies that adapt split points to variable network conditions. Nonetheless, these approaches treat application requirements as fixed; they do not adapt based on user physiological state. \COGN{} extends split computing by introducing cognitive state as a primary optimization parameter, fundamentally altering the dynamics of edge-device resource allocation.
 
 \subsection{Reconfigurable Intelligent Surfaces (RIS) and Physical Layer Adaptation}
-RIS technology, also termed Intelligent Reflecting Surfaces (IRS) or Metasurfaces, has emerged as a transformative physical layer technology for 6G. Seminal theoretical work by Wu and Zhang \cite{wu2020towards} established the optimization landscape for RIS-assisted MIMO systems. Subsequent work by ElMossallamy et al. \cite{elmossallamy2020} demonstrated that RIS can effectively combat multipath fading and improve coverage in NLOS scenarios.
+RIS technology, also termed Intelligent Reflecting Surfaces (IRS) or Metasurfaces, has emerged as a transformative physical layer technology for 6G. The tutorial by Wu et al. \cite{wu2021tutorial} systematized the optimization landscape for RIS-aided wireless communications. Subsequent work by Tang et al. \cite{tang2021ris} validated RIS path-loss models through experimental measurement, confirming practical coverage gains.
 
 Nearly all existing RIS optimization literature assumes quasi-static optimization horizons (on the order of seconds to minutes). \COGN{} contributes by proposing millisecond-scale RIS adaptation triggered by semantic urgency signals, creating a feedback loop between application semantics and physical layer adaptation. To the best of our knowledge, this is the first work explicitly synchronizing RIS phase shifts with semantic traffic classification, though we emphasize that the millisecond reconfiguration itself builds on prior fast-switching RIS hardware demonstrations rather than claiming new physical-layer engineering.
 
 \subsection{Neuromarkers and Cognitive Load Assessment in HCI}
 Formal assessment of cognitive load via EEG dates to work on Event-Related Potentials (ERPs) such as P300, established by Sutton et al. \cite{sutton1965evoked}. Modern cognitive neuroscience has identified robust biomarkers: P300 amplitude correlates with attentional resource allocation \cite{polich2007}, while theta-beta oscillation ratios (TBR) serve as indicators of workload and mental fatigue \cite{klimesch2012alpha}.
 
-Recent BCI systems employ these markers for adaptive interfaces (Roy et al. \cite{roy2016workload}), but these applications remain localized to single devices. \COGN{} extends cognitive load adaptation from device-level to network-level resource management, an area that, to our knowledge, has received little prior systematic study; our contribution lies in the protocol integration and quantitative evaluation rather than in new biomarker discovery.
+Recent BCI systems employ these markers for adaptive interfaces (Fan et al. \cite{fan2022eegtnet}), but these applications remain localized to single devices. \COGN{} extends cognitive load adaptation from device-level to network-level resource management, an area that, to our knowledge, has received little prior systematic study; our contribution lies in the protocol integration and quantitative evaluation rather than in new biomarker discovery.
 
 \subsection{Security in Semantic Communication Systems}
 As semantic communication systems mature, security challenges emerge. Adversarial examples in deep neural networks (Goodfellow et al. \cite{goodfellow2014explaining}) reveal that small perturbations in input space can cause catastrophic misclassification. In semantic channels, such attacks could modify the reconstructed intent without detection via traditional integrity checks.
 
-Recent work (Durumeric et al. \cite{durumeric2014semantically}) proposed detection mechanisms for semantic manipulation, though these assume offline verification. SentinelX provides a real-time, cryptographically-verified semantic integrity mechanism designed for network-scale deployment; while the crypto primitives themselves are standard, their integration with semantic intent authentication is, to our knowledge, novel.
+Recent work (Hu et al. \cite{hu2023robust}) proposed robust semantic coding against semantic errors via a masked VQ-VAE codebook, though designed for link-level robustness rather than network-scale integrity verification. SentinelX provides a real-time, cryptographically-verified semantic integrity mechanism designed for network-scale deployment; while the crypto primitives themselves are standard, their integration with semantic intent authentication is, to our knowledge, novel.
 
 \subsection{Positioning of \COGN{} Within the Nexus Initiative}
 The (Heterogeneous Intelligent Knowledge and Sensing Enabled Mixed Infrastructure) Nexus represents an ambitious initiative to unify diverse research clusters addressing AI, sensing, vehicular networks, and cognitive systems. \COGN{} specifically serves the intersection of these domains by providing infrastructure-level support for cognitive-adaptive network operation. Our work directly addresses Nexus requirements for: (a) seamless interoperability across heterogeneous devices, (b) real-time adaptation to changing conditions, and (c) transparent integration of neural feedback signals.
@@ -661,17 +661,17 @@ H.~Xie, Z.~Qin, G.~Y. Li, and B.~H. Juang, ``Deep learning enabled semantic comm
 \bibitem{bonomi2012fog}
 F.~Bonomi, R.~Milito, J.~Zhu, and S.~Addepalli, ``Fog computing and its role in the Internet of Things,'' in \emph{Proceedings of the First Edition of the MCC Workshop on Mobile Cloud Computing}, 2012, pp.~13--16. DOI: \href{https://doi.org/10.1145/2342509.2342513}{10.1145/2342509.2342513}
 
-\bibitem{zhou2019edge}
-Z.~Zhou, X.~Chen, E.~Li, L.~Zeng, K.~Luo, and J.~Zhang, ``Edge intelligence: Paving the last mile of artificial intelligence with edge computing,'' \emph{Proceedings of the IEEE}, vol.~107, no.~8, pp.~1738--1762, Aug. 2019. DOI: \href{https://doi.org/10.1109/JPROC.2019.2918951}{10.1109/JPROC.2019.2918951}
+\bibitem{letaief2022edge}
+K.~B. Letaief, Y.~Shi, J.~Lu, and J.~Lu, ``Edge artificial intelligence for 6G: Vision, enabling technologies, and applications,'' \emph{IEEE Journal on Selected Areas in Communications}, vol.~40, no.~1, pp.~5--36, Jan. 2022. DOI: \href{https://doi.org/10.1109/JSAC.2021.3126076}{10.1109/JSAC.2021.3126076}
 
-\bibitem{mao2017learning}
-Y.~Mao, C.~You, J.~Zhang, K.~Huang, and K.~B. Letaief, ``A survey on mobile edge computing: The communication perspective,'' \emph{IEEE Communications Surveys \& Tutorials}, vol.~19, no.~4, pp.~2322--2358, 2017. DOI: \href{https://doi.org/10.1109/COMST.2017.2745201}{10.1109/COMST.2017.2745201}
+\bibitem{luo2021resource}
+Q.~Luo, S.~Hu, C.~Li, G.~Li, and W.~Shi, ``Resource scheduling in edge computing: A survey,'' \emph{IEEE Communications Surveys \& Tutorials}, vol.~23, no.~4, pp.~2131--2165, 4th Quart. 2021. DOI: \href{https://doi.org/10.1109/COMST.2021.3106401}{10.1109/COMST.2021.3106401}
 
-\bibitem{wu2020towards}
-Q.~Wu and R.~Zhang, ``Towards smart and reconfigurable environment: Intelligent reflecting surface aided wireless network,'' \emph{IEEE Communications Magazine}, vol.~58, no.~1, pp.~106--112, Jan. 2020. DOI: \href{https://doi.org/10.1109/MCOM.001.1900107}{10.1109/MCOM.001.1900107}
+\bibitem{wu2021tutorial}
+Q.~Wu, S.~Zhang, B.~Zheng, C.~You, and R.~Zhang, ``Intelligent reflecting surface-aided wireless communications: A tutorial,'' \emph{IEEE Transactions on Communications}, vol.~69, no.~5, pp.~3313--3351, May 2021. DOI: \href{https://doi.org/10.1109/TCOMM.2021.3051897}{10.1109/TCOMM.2021.3051897}
 
-\bibitem{elmossallamy2020}
-M.~A. ElMossallamy, H.~Zhang, L.~Song, K.~G. Seddik, Z.~Han, and G.~Y. Li, ``Reconfigurable intelligent surfaces for wireless communications: Principles, challenges, and opportunities,'' \emph{IEEE Transactions on Cognitive Communications and Networking}, vol.~6, no.~3, pp.~990--1002, Sep. 2020. DOI: \href{https://doi.org/10.1109/TCCN.2020.2992604}{10.1109/TCCN.2020.2992604}
+\bibitem{tang2021ris}
+W.~Tang, M.~Z.~Chen, X.~Chen, J.~Y.~Dai, Y.~Han, M.~Di Renzo, Y.~Zeng, S.~Jin, Q.~Cheng, and T.~J.~Cui, ``Wireless communications with reconfigurable intelligent surface: Path loss modeling and experimental measurement,'' \emph{IEEE Transactions on Wireless Communications}, vol.~20, no.~1, pp.~421--439, Jan. 2021. DOI: \href{https://doi.org/10.1109/TWC.2020.3024887}{10.1109/TWC.2020.3024887}
 
 \bibitem{sutton1965evoked}
 S.~Sutton, M.~Braren, J.~Zubin, and E.~R. John, ``Evoked-potential correlates of stimulus uncertainty,'' \emph{Science}, vol.~150, no.~3700, pp.~1187--1188, Nov. 1965. DOI: \href{https://doi.org/10.1126/science.150.3700.1187}{10.1126/science.150.3700.1187}
@@ -682,14 +682,14 @@ J.~Polich, ``Updating P300: An integrative theory of P3a and P3b,'' \emph{Clinic
 \bibitem{klimesch2012alpha}
 W.~Klimesch, ``$\alpha$-band oscillations, attention, and controlled access to stored information,'' \emph{Trends in Cognitive Sciences}, vol.~16, no.~12, pp.~606--617, Dec. 2012. DOI: \href{https://doi.org/10.1016/j.tics.2012.10.007}{10.1016/j.tics.2012.10.007}
 
-\bibitem{roy2016workload}
-R.~N. Roy, S.~Charbonnier, A.~Campagne, and S.~Bonnet, ``Efficient mental workload estimation using task-independent EEG features,'' \emph{Journal of Neural Engineering}, vol.~13, no.~2, art.~026019, 2016. DOI: \href{https://doi.org/10.1088/1741-2560/13/2/026019}{10.1088/1741-2560/13/2/026019}
+\bibitem{fan2022eegtnet}
+C.~Fan, J.~Hu, S.~Huang, Y.~Peng, and S.~Kwong, ``EEG-TNet: An end-to-end brain computer interface framework for mental workload estimation,'' \emph{Frontiers in Neuroscience}, vol.~16, 2022. DOI: \href{https://doi.org/10.3389/fnins.2022.869522}{10.3389/fnins.2022.869522}
 
 \bibitem{goodfellow2014explaining}
 I.~J. Goodfellow, J.~Shlens, and C.~Szegedy, ``Explaining and harnessing adversarial examples,'' in \emph{International Conference on Learning Representations (ICLR)}, 2015, pp.~1--11.
 
-\bibitem{durumeric2014semantically}
-Z.~Durumeric, J.~Kasten, M.~Bailey, and J.~A. Halderman, ``Analysis of the HTTPS certificate ecosystem,'' in \emph{Proceedings of the ACM Conference on Internet Measurement (IMC)}, 2013, pp.~291--304. DOI: \href{https://doi.org/10.1145/2504730.2504755}{10.1145/2504730.2504755}
+\bibitem{hu2023robust}
+Q.~Hu, G.~Zhang, Z.~Qin, Y.~Cai, G.~Yu, and G.~Y.~Li, ``Robust semantic communications with masked VQ-VAE enabled codebook,'' \emph{IEEE Transactions on Wireless Communications}, vol.~22, no.~12, pp.~8707--8722, Dec. 2023. DOI: \href{https://doi.org/10.1109/TWC.2023.3265201}{10.1109/TWC.2023.3265201}
 
 \bibitem{chen2024ris}
 S.~Chen, Y.~Hui, Y.~Qin, Y.~Yuan, W.~Meng, X.~Luo, et al., ``RIS-based on-the-air semantic communications: A diffractional deep neural network approach,'' \emph{IEEE Wireless Communications}, vol.~31, no.~4, pp.~115--122, Jul./Aug. 2024. DOI: \href{https://doi.org/10.1109/MWC.010.2300180}{10.1109/MWC.010.2300180}
